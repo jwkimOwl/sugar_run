@@ -42,6 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final response = await _apiService.post('v2/natural/nutrients', _apiService.body(input));
     String response_string="YUMMY";
     Nutrition response_class;
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       response_class= Nutrition.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
@@ -85,15 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class Nutrition {
-  final String foodName;
-  final double calories;
-  final double totalFat;
-  final double saturatedFat;
-  final double cholesterol;
-  final double sodium;
-  final double totalCarbohydrate;
-  final double dietaryFiber;
-  final double sugars;
+  final dynamic foodName;
+  final dynamic calories;
+  final dynamic totalFat;
+  final dynamic saturatedFat;
+  final dynamic cholesterol;
+  final dynamic sodium;
+  final dynamic totalCarbohydrate;
+  final dynamic dietaryFiber;
+  final dynamic sugars;
   /*
   "nf_calories": 33.81,
       "nf_total_fat": 0.08,
@@ -119,15 +121,15 @@ class Nutrition {
 
   factory Nutrition.fromJson(Map<String, dynamic> json) {
     return Nutrition(
-      foodName: json['foods'][0]['food_name'] as String,
-      calories: (json['foods'][0]['nf_calories'] as num).toDouble(),
-      totalFat: (json['foods'][0]['nf_total_fat'] as num).toDouble(),
-      saturatedFat: (json['foods'][0]['nf_saturated_fat'] as num).toDouble(),
-      cholesterol: (json['foods'][0]['nf_cholesterol'] as num).toDouble(),
-      sodium: (json['foods'][0]['nf_sodium'] as num).toDouble(),
-      totalCarbohydrate: (json['foods'][0]['nf_total_carbohydrate'] as num).toDouble(),
-      dietaryFiber: (json['foods'][0]['nf_dietary_fiber'] as num).toDouble(),
-      sugars: (json['foods'][0]['nf_sugars'] as num).toDouble(),
+      foodName: json['foods'][0]['food_name']?.toString() ?? 'Unknown',
+      calories: json['foods'][0]['nf_calories']?.toDouble() ?? 'Unknown',
+      totalFat: json['foods'][0]['nf_total_fat']?.toDouble() ?? 'Unknown',
+      saturatedFat: json['foods'][0]['nf_saturated_fat']?.toDouble() ?? 'Unknown',
+      cholesterol: json['foods'][0]['nf_cholesterol']?.toDouble() ?? 'Unknown',
+      sodium: json['foods'][0]['nf_sodium']?.toDouble() ?? 'Unknown',
+      totalCarbohydrate: json['foods'][0]['nf_total_carbohydrate']?.toDouble() ?? 'Unknown',
+      dietaryFiber: json['foods'][0]['nf_dietary_fiber']?.toDouble() ?? 'Unknown',
+      sugars: json['foods'][0]['nf_sugars']?.toDouble() ?? 'Unknown',
     );
   }
 }
