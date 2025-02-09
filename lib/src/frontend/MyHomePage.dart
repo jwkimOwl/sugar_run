@@ -38,9 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       "Total Carbs: " + response_class.totalCarbohydrate.toString() + "\n" + 
                       "Total Fiber: " + response_class.dietaryFiber.toString() + "\n" + 
                       "Total Sugar: " + response_class.sugars.toString() + "\n" +
-                      "Total Protein: " + response_class.protein.toString() + "\n" +
-                      response_class.score().toString() + "\n" +
-                      response_class.gi_score().toString();
+                      "Total Protein: " + response_class.protein.toString();
     setState(() {
       _response = response_string;
     });
@@ -66,6 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () => fetchUserData(_controller.text),
               child: const Text('Fetch Data'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightGreenAccent
+                
+              ),
             ),
             const SizedBox(height: 20),
             Text(_response),

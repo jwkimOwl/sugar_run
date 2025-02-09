@@ -21,6 +21,21 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - "assets/img/Sugar Run.png"
+    - "assets/img/appicon.png"
+    - "assets/img/menuicon.png"
+    - "assets/img/Vector_ Submit_menu.png"
+    - "assets/img/high_face.png"
+    - "assets/img/middle_face.png"
+    - "assets/img/low_face.png"
+    - "assets/img/profile_page.png"
+    - "assets/img/Add_meal.png"
+    - "assets/img/Games.png"
+    - "assets/img/leader_board.png"
+    - "assets/img/Learn.png"
+    - "assets/img/Profile.png"
+    - "assets/img/settings.png"
 
 flutter_launcher_icons:
   android: "launcher_icon"

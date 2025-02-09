@@ -60,17 +60,45 @@ class Nutrition {
     double gi = min(100,log(max(1,gi_raw/0.8))*25);
     return gi;
   }
-  double score() {
-    if (totalFat == 'Unknown') return -1;
-    if (totalCarbohydrate == 'Unknown') return -1;
-    if (sugars == 'Unknown') return -1;
-    if (dietaryFiber == 'Unknown') return -1;
-    if (protein == 'Unknown') return -1;
-    double gi_raw = (((totalCarbohydrate*0.75) + (sugars*1.25) - (dietaryFiber*0.5)) / ((protein*0.5) + (totalFat*0.3) +1));
-    double gi = min(100,log(max(1,gi_raw/0.4))*20);
-    double gram_scale = 60/(protein+totalFat+sugars+dietaryFiber);
-    double balance=100-(2.5*(gram_scale*protein-25).abs())-(2*(gram_scale*totalFat-15).abs())-(max(3*(gram_scale*sugars-7),0))-(max(3*(10-gram_scale*dietaryFiber),0));
-    double health_score = ((100 - gi)/2)+balance/2;
-    return health_score;
+
+  @override
+  String toString() {
+    return this.foodName + "\n" + 
+      "Calories: " + this.calories.toString() + "\n" + 
+      "Total Fat: " + this.totalFat.toString() + "\n" + 
+      "Total Saturated Fat: " + this.saturatedFat.toString() + "\n" + 
+      "Total Cholesterol: " + this.cholesterol.toString() + "\n" + 
+      "Total Sodium: " + this.sodium.toString() + "\n" + 
+      "Total Carbs: " + this.totalCarbohydrate.toString() + "\n" + 
+      "Total Fiber: " + this.dietaryFiber.toString() + "\n" + 
+      "Total Sugar: " + this.sugars.toString() + "\n" +
+      "Total Protein: " + this.protein.toString() + "\n\n";
+  }
+
+  bool available() {
+    if (totalFat == 'Unknown') return false;
+    if (totalCarbohydrate == 'Unknown') return false;
+    if (sugars == 'Unknown') return false;
+    if (dietaryFiber == 'Unknown') return false;
+    if (protein == 'Unknown') return false;
+    return true;
+  }
+
+  Nutrition markUnavailable({
+    Nutrition? data,
+    bool? isChecked,
+  }) {
+    return Nutrition(
+      foodName: foodName+": unavailable",
+      calories: this.calories,
+      totalFat: this.totalFat,
+      saturatedFat: this.saturatedFat,
+      cholesterol: this.cholesterol,
+      sodium: this.sodium,
+      totalCarbohydrate: this.totalCarbohydrate,
+      dietaryFiber: this.dietaryFiber,
+      sugars: this.sugars,
+      protein: this.protein,
+    );
   }
 }
