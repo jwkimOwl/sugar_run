@@ -34,7 +34,7 @@ class _ChoicePageState extends State<ChoicePage> {
   }
   Future<void> fetchUserData(String input) async {
     final splitted = input.split('\n');
-    print(splitted);
+    //print(splitted);
     List<Nutrition> nutritions=[];
     for(String menu_item in splitted){
       try {
@@ -45,7 +45,7 @@ class _ChoicePageState extends State<ChoicePage> {
         if (response.statusCode == 200) {
           response_class= Nutrition.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
         } else {
-          print(response.body);
+          //print(response.body);
           throw Exception('Failed to load nutritionnnn');
         }
         if(!response_class.available()){
@@ -53,7 +53,7 @@ class _ChoicePageState extends State<ChoicePage> {
         }
         nutritions.add(response_class);
       } catch (e) {
-        print("invalid input");
+        //print("invalid input");
       }
     }
     setState(() {
@@ -68,7 +68,7 @@ class _ChoicePageState extends State<ChoicePage> {
     for(int i=0;i<items.length;i++){
       if(items[i].isChecked){
         if(!items[i].data.available()){
-          print("unavailable");
+          //print("unavailable");
           return 0;
         }
         count+=1;
@@ -85,7 +85,7 @@ class _ChoicePageState extends State<ChoicePage> {
     ans=50-(gi_sum/(2*count));
     double gram_scale = 60/(total_protein+total_fat+total_sugar+total_fiber);
     double balance=100-(2.5*(gram_scale*total_protein-25).abs())-(2*(gram_scale*total_fat-15).abs())-(max(3*(gram_scale*total_sugar-7),0))-(max(3*(10-gram_scale*total_fiber),0));
-    print(ans.toString()+",  "+balance.toString());
+    //print(ans.toString()+",  "+balance.toString());
     ans+=min(50,max(0,balance/2));
     return ans/100.0;
   }
@@ -155,7 +155,7 @@ class _ChoicePageState extends State<ChoicePage> {
                         } else{
                           face=AssetImage("assets/img/high_face.png");
                         }
-                        print(prefs==null);
+                        //print(prefs==null);
                       },
                     ),
                   ),

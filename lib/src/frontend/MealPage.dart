@@ -63,6 +63,7 @@ class _MealPageState extends State<MealPage> {
                 },
                 
               ),
+              Text("Powered by Nutritionix"),
             ],)
         ),
       ),
