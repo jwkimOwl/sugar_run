@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Nutrition {
   final dynamic foodName;
   final dynamic calories;
@@ -48,16 +50,27 @@ class Nutrition {
       protein: json['foods'][0]['nf_protein']?.toDouble() ?? 'Unknown',
     );
   }
-
+  double gi_score(){
+    if (totalFat == 'Unknown') return -1;
+    if (totalCarbohydrate == 'Unknown') return -1;
+    if (sugars == 'Unknown') return -1;
+    if (dietaryFiber == 'Unknown') return -1;
+    if (protein == 'Unknown') return -1;
+    double gi_raw = (((totalCarbohydrate*0.75) + (sugars*1.25) - (dietaryFiber*0.5)) / ((protein*0.5) + (totalFat*0.3) +1));
+    double gi = min(100,log(max(1,gi_raw/0.8))*25);
+    return gi;
+  }
   double score() {
     if (totalFat == 'Unknown') return -1;
     if (totalCarbohydrate == 'Unknown') return -1;
     if (sugars == 'Unknown') return -1;
     if (dietaryFiber == 'Unknown') return -1;
     if (protein == 'Unknown') return -1;
-    double gi = (((totalCarbohydrate*0.75) + (sugars*1.25) - (dietaryFiber*0.5)) / ((protein*0.5) + (totalFat*0.3) +1)) * 100;
-    
-    double health_score = ((100 - gi)/2)-(sugars/2)+(protein/5)+(totalFat/10);
+    double gi_raw = (((totalCarbohydrate*0.75) + (sugars*1.25) - (dietaryFiber*0.5)) / ((protein*0.5) + (totalFat*0.3) +1));
+    double gi = min(100,log(max(1,gi_raw/0.4))*20);
+    double gram_scale = 60/(protein+totalFat+sugars+dietaryFiber);
+    double balance=100-(2.5*(gram_scale*protein-25).abs())-(2*(gram_scale*totalFat-15).abs())-(max(3*(gram_scale*sugars-7),0))-(max(3*(10-gram_scale*dietaryFiber),0));
+    double health_score = ((100 - gi)/2)+balance/2;
     return health_score;
   }
 }
