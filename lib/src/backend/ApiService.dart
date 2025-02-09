@@ -42,7 +42,7 @@ class ApiService {
   }
 
   void _logRequest(Uri uri, dynamic body) {
-    if (body != null) print("Request Body: ${jsonEncode(body)}");
+    if (body != null) log("Request Body: ${jsonEncode(body)}");
   }
 
   void _logResponse(Uri uri, http.Response response) {
@@ -61,9 +61,9 @@ class ApiService {
 
   Future<http.Response> post(String endpoint, dynamic body) async {
     Uri uri = _getUri(endpoint);
-    print(uri);
-    print(body);
-    print(_headers());
+    //print(uri);
+    //print(body);
+    //print(_headers());
     return _sendRequest(
         () => http.post(uri, headers: _headers(), body: jsonEncode(body)), uri,
         body: body);

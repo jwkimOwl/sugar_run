@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'src/backend/ApiService.dart';
+import 'src/backend/Nutrition.dart';
 
 import 'dart:convert';
 
@@ -42,14 +43,24 @@ class _MyHomePageState extends State<MyHomePage> {
     final response = await _apiService.post('v2/natural/nutrients', _apiService.body(input));
     String response_string="YUMMY";
     Nutrition response_class;
-    print(response.statusCode);
-    print(response.body);
+    //print(response.statusCode);
+    //print(response.body);
     if (response.statusCode == 200) {
       response_class= Nutrition.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
       throw Exception('Failed to load nutritionnnn');
     }
-    response_string = response_class.foodName + "\n" + response_class.calories.toString() + "\n" + response_class.totalFat.toString() + "\n" + response_class.saturatedFat.toString() + "\n" + response_class.cholesterol.toString() + "\n" + response_class.sodium.toString() + "\n" + response_class.totalCarbohydrate.toString() + "\n" + response_class.dietaryFiber.toString() + "\n" + response_class.sugars.toString();
+    response_string = response_class.foodName + "\n" + 
+                      "Calories: " + response_class.calories.toString() + "\n" + 
+                      "Total Fat: " + response_class.totalFat.toString() + "\n" + 
+                      "Total Saturated Fat: " + response_class.saturatedFat.toString() + "\n" + 
+                      "Total Cholesterol: " + response_class.cholesterol.toString() + "\n" + 
+                      "Total Sodium: " + response_class.sodium.toString() + "\n" + 
+                      "Total Carbs: " + response_class.totalCarbohydrate.toString() + "\n" + 
+                      "Total Fiber: " + response_class.dietaryFiber.toString() + "\n" + 
+                      "Total Sugar: " + response_class.sugars.toString() + "\n" +
+                      "Total Protein: " + response_class.protein.toString() + "\n" +
+                      response_class.score().toString();
     setState(() {
       _response = response_string;
     });
@@ -86,50 +97,3 @@ class _MyHomePageState extends State<MyHomePage> {
 
 }
 
-class Nutrition {
-  final dynamic foodName;
-  final dynamic calories;
-  final dynamic totalFat;
-  final dynamic saturatedFat;
-  final dynamic cholesterol;
-  final dynamic sodium;
-  final dynamic totalCarbohydrate;
-  final dynamic dietaryFiber;
-  final dynamic sugars;
-  /*
-  "nf_calories": 33.81,
-      "nf_total_fat": 0.08,
-      "nf_saturated_fat": 0.03,
-      "nf_cholesterol": 0,
-      "nf_sodium": 0.98,
-      "nf_total_carbohydrate": 8.87,
-      "nf_dietary_fiber": 0.44,
-      "nf_sugars": 7.59,
-  */
-
-  const Nutrition({
-    required this.foodName,
-    required this.calories,
-    required this.totalFat,
-    required this.saturatedFat,
-    required this.cholesterol,
-    required this.sodium,
-    required this.totalCarbohydrate,
-    required this.dietaryFiber,
-    required this.sugars,
-  });
-
-  factory Nutrition.fromJson(Map<String, dynamic> json) {
-    return Nutrition(
-      foodName: json['foods'][0]['food_name']?.toString() ?? 'Unknown',
-      calories: json['foods'][0]['nf_calories']?.toDouble() ?? 'Unknown',
-      totalFat: json['foods'][0]['nf_total_fat']?.toDouble() ?? 'Unknown',
-      saturatedFat: json['foods'][0]['nf_saturated_fat']?.toDouble() ?? 'Unknown',
-      cholesterol: json['foods'][0]['nf_cholesterol']?.toDouble() ?? 'Unknown',
-      sodium: json['foods'][0]['nf_sodium']?.toDouble() ?? 'Unknown',
-      totalCarbohydrate: json['foods'][0]['nf_total_carbohydrate']?.toDouble() ?? 'Unknown',
-      dietaryFiber: json['foods'][0]['nf_dietary_fiber']?.toDouble() ?? 'Unknown',
-      sugars: json['foods'][0]['nf_sugars']?.toDouble() ?? 'Unknown',
-    );
-  }
-}
