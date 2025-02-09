@@ -61,6 +61,9 @@ class ApiService {
 
   Future<http.Response> post(String endpoint, dynamic body) async {
     Uri uri = _getUri(endpoint);
+    print(uri);
+    print(body);
+    print(_headers());
     return _sendRequest(
         () => http.post(uri, headers: _headers(), body: jsonEncode(body)), uri,
         body: body);
